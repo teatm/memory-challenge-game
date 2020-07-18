@@ -1,19 +1,32 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 
-export function App({ initialData }) {
-  const [count, setCount] = React.useState(0);
+import utils from '../math-utils'
+import PlayCard from './PlayCard'
+
+// const MemoryChallenge = props => {
+
+// };
+
+const randomArray = (utils.range(1, 12));
+
+const array = [1, 2, 3, 4, 5];
+
+const shuffled = randomArray.sort(() => 0.5 - Math.random());
+
+
+export function App() {
+  const [stars, setStars] = useState(utils.random(1, 9));
+
   return (
     <div>
-      <h1>{initialData.appName}</h1>
-      This is a sample stateful and server-side rendered React application.
-      <br />
-      <br />
-      Here is a button that will track how many times you click it:
-      <br />
-      <br />
-      <button title="increment" onClick={() => setCount(count + 1)}>
-        {count}
-      </button>
+      <div className="right">
+        {randomArray.map((number) => (
+          <PlayCard
+            number={number}
+            status={number % 3 == 0 ? 'used' : number % 3 == 1 ? 'available' : 'wrong'}
+          />
+        ))}
+      </div>
     </div>
   );
 }
