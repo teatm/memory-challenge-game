@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const PlayCard = (props) => (
+const MemoryCard = (props) => (
     <button
         className="number"
         style={{ backgroundColor: colors[props.status] }}
@@ -18,4 +18,4 @@ const colors = {
     candidate: 'deepskyblue',
 };
 
-export default PlayCard;
+export default MemoryCard;
