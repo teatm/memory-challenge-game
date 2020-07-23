@@ -7,7 +7,7 @@ import PlayAgain from './PlayAgain';
 const randomArray = (utils.range(1, 12));
 const shuffled = randomArray.sort(() => 0.5 - Math.random());
 
-const Game = () => {
+const Game = (props) => {
     const [secondsLeft, setSecondsLeft] = useState(5);
     const gameStatus = secondsLeft === 0 ? 'lost' : 'active';
 
@@ -26,7 +26,7 @@ const Game = () => {
             {gameStatus === 'active' ? (
                 <MemoryBoard array={shuffled} secondsLeft={secondsLeft} />
             ) : (
-                    <PlayAgain gameStatus={gameStatus} />
+                    <PlayAgain onClick={props.startNewGame} gameStatus={gameStatus} />
                 )}
         </div>
     );
