@@ -9,7 +9,8 @@ const MemoryBoard = (props) => {
                 <MemoryCard
                     key={number}
                     number={number}
-                    status={number % 3 == 0 ? 'used' : number % 3 == 1 ? 'available' : 'wrong'}
+                    status={props.gameStatus === 'inactive' ? 'available' : ''}
+                    gameStatus={props.gameStatus}
                 />
             ))}
             <div className="timer">Time Remaining: {props.secondsLeft}</div>
