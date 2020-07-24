@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+const MemoryCard = (props) => {
+    return (
+        <button
+            className="number"
+            style={{ backgroundColor: colors[props.status] }}
+        >
 
-const MemoryCard = (props) => (
-    <button
-        className="number"
-        style={{ backgroundColor: colors[props.status] }}
-    >
-        {props.number}
-    </button>
-);
+            {props.gameStatus === 'inactive' && (
+                <div>{props.number > 12 ? props.number - 12 : props.number}</div>
+            )}
+
+        </button>
+    );
+
+};
 
 // Color Theme
 const colors = {

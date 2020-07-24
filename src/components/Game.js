@@ -4,12 +4,14 @@ import utils from '../math-utils'
 import MemoryBoard from './MemoryBoard';
 import PlayAgain from './PlayAgain';
 
-const randomArray = (utils.range(1, 12));
+const length = 24;
+const randomArray = utils.range(1, length);
 const shuffled = randomArray.sort(() => 0.5 - Math.random());
 
 const Game = (props) => {
     const [secondsLeft, setSecondsLeft] = useState(5);
-    const gameStatus = secondsLeft === 0 ? 'lost' : 'active';
+    const gameStatus = timesLeft === 0 ? 'lost' : secondsLeft === 0 ? 'active' : 'inactive';
+    const timesLeft = 5;
 
     useEffect(() => {
         if (secondsLeft > 0) {
@@ -23,8 +25,8 @@ const Game = (props) => {
 
     return (
         <div className="right">
-            {gameStatus === 'active' ? (
-                <MemoryBoard array={shuffled} secondsLeft={secondsLeft} />
+            {gameStatus !== 'lost' ? (
+                <MemoryBoard array={shuffled} secondsLeft={secondsLeft} gameStatus={gameStatus} />
             ) : (
                     <PlayAgain onClick={props.startNewGame} gameStatus={gameStatus} />
                 )}
