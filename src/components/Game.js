@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import utils from '../math-utils'
-import MemoryBoard from './MemoryBoard';
 import MemoryCard from './MemoryCard';
 import PlayAgain from './PlayAgain';
 
@@ -10,12 +9,12 @@ const randomArray = utils.range(1, length);
 const shuffled = randomArray.sort(() => 0.5 - Math.random());
 
 const Game = (props) => {
-    const [secondsLeft, setSecondsLeft] = useState(5);
+    const [secondsLeft, setSecondsLeft] = useState(3);
+    const [timesLeft, setTimesLeft] = useState(5);
     const [availableNums, setAvailableNums] = useState(utils.range(1, length));
     const [checkingNums, setCheckingNums] = useState([]);
     const [matchedNums, setMatchedNums] = useState([]);
     const gameStatus = timesLeft === 0 ? 'lost' : secondsLeft === 0 ? 'active' : 'inactive';
-    const timesLeft = 5;
 
     useEffect(() => {
         if (secondsLeft > 0) {
@@ -39,6 +38,10 @@ const Game = (props) => {
             return 'available';
         }
 
+        if (matchedNums.includes(number)) {
+            return 'matched';
+        }
+
         return 'used';
     };
 
@@ -49,10 +52,24 @@ const Game = (props) => {
 
         if (currentStatus === 'checking') {
             const newAvailableNums = availableNums.concat(number);
-            setCheckingNums(newAvailableNums);
+            setAvailableNums(newAvailableNums);
         }
 
         if (currentStatus === 'available') {
+            if (checkingNums.length !== 0) {
+                setTimesLeft((prevTimesLeft) => prevTimesLeft - 1);
+                const matchedNumber = number > 12 ? number - 12 : number + 12;
+                if (checkingNums.includes(matchedNumber)) {
+                    const newMatchedNums = matchedNums.concat([number, matchedNumber]);
+                    const newAvailableNums = availableNums.filter(num => !newMatchedNums.includes(num));
+                    setMatchedNums(newMatchedNums);
+                    setAvailableNums(newAvailableNums);
+                }
+
+                setCheckingNums([]);
+                return;
+            }
+
             const newCheckingNums = checkingNums.concat(number);
             setCheckingNums(newCheckingNums);
         }
@@ -70,7 +87,9 @@ const Game = (props) => {
                             onClick={onNumberClick}
                         />
                     ))}
-                    <div className="timer">Time Remaining: {secondsLeft}</div>
+                    {secondsLeft > 0 &&
+                        <div className="timer">Time Remaining: {secondsLeft}</div>
+                    }
                 </div>
             ) : (
                     <PlayAgain onClick={props.startNewGame} gameStatus={gameStatus} />
