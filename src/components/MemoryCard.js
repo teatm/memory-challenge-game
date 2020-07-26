@@ -8,7 +8,7 @@ const MemoryCard = (props) => {
             onClick={() => props.onClick(props.number, props.status)}
         >
 
-            {(props.status === 'inactive' || props.status === 'checking' || props.status == 'matched') && (
+            {(props.status === 'inactive' || props.status === 'checking' || props.status === 'matched' || props.status === 'wrong') && (
                 <div>{props.number > 12 ? props.number - 12 : props.number}</div>
             )}
 
@@ -20,9 +20,8 @@ const MemoryCard = (props) => {
 // Color Theme
 const colors = {
     available: 'lightgray',
-    used: 'lightgreen',
-    matched: 'lightcoral',
-    candidate: 'deepskyblue',
+    matched: 'lightgreen',
+    wrong: 'lightcoral',
 };
 
 export default MemoryCard;
