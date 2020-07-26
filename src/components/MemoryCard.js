@@ -5,9 +5,10 @@ const MemoryCard = (props) => {
         <button
             className="number"
             style={{ backgroundColor: colors[props.status] }}
+            onClick={() => props.onClick(props.number, props.status)}
         >
 
-            {props.gameStatus === 'inactive' && (
+            {(props.status === 'inactive' || props.status === 'checking' || props.status === 'matched' || props.status === 'wrong') && (
                 <div>{props.number > 12 ? props.number - 12 : props.number}</div>
             )}
 
@@ -19,9 +20,8 @@ const MemoryCard = (props) => {
 // Color Theme
 const colors = {
     available: 'lightgray',
-    used: 'lightgreen',
+    matched: 'lightgreen',
     wrong: 'lightcoral',
-    candidate: 'deepskyblue',
 };
 
 export default MemoryCard;
